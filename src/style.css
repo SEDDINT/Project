@@ -1,15 +1,22 @@
+body{
+    background-color:rgb(21, 21, 21);
+    color: white;
+}
 nav {
-    background-color: #333;
+    background-color: none;
     overflow: hidden;
 }
 
 nav ul {
+    display:flex;
+    justify-content:center;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
 nav li {
+    font-size:20px;
     float: left;
 }
 
@@ -24,6 +31,64 @@ nav a {
 nav a:hover {
     color: rgb(214, 214, 214);
 }
+
 section{
     height: 100vh;
+}
+
+.animeate {
+    opacity: 0;
+    transform: translateY(50px);
+    animation: animateUp 1s ease-out forwards;
+}
+
+@keyframes animateUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#home{
+    background: url("images/home.jpg");
+    background-repeat: no-repeat;
+    background-size: 200vh 100vh;
+}
+
+.home-content h1{
+    color: white;
+    padding-left: 10vh;
+    padding-top: 10vh;
+    font-size: 50px;
+}
+
+.about-us-container{
+    display: flex;
+}
+.img, .text{
+    margin: 4vh;
+    background-color: yellow;
+    height: 90vh;
+    width: 100%;
+    border: black solid 1px;
+}
+.our-team-container{
+    display: flex;
+}
+
+.team-member{
+    margin: 3vh;
+    background-color: yellow;
+    height: 60vh;
+    width: 100%;
+}
+
+.team-member img{
+    height: 60vh;
+    width: 100%;
+}
+
+form{
+    margin: 45vh;
+    padding-top: 20vh;
 }
