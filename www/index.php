@@ -26,7 +26,7 @@
         <div class="home-content">
             <h1 class="animeate">
                 SHAPE YOUR BODY
-                <a href="../Authentecation/login.html">Login</a>
+                <a href="../Authentecation/login.php">Login</a>
             </h1>
         </div>
     </section>
@@ -58,9 +58,37 @@
         </div>
     </section>
     <section id="classes">
-        <?php
-            echo "hello";
-        ?>
+    <?php
+        include("../db_login.php");
+        
+        $query = "SELECT * from classes";
+
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            echo "<table border='3'>";
+            echo "<tr>";
+            echo "<th> ID </th>";
+            echo "<th> Trainer </th>";
+            echo "<th> Start Date</th>";
+            echo "<th> Number of enrolment </th>";
+            echo "<th> Max number of enrolment </th>";
+            echo "</tr>";
+            while ($result_row = mysqli_fetch_row($result)) {
+                echo "<tr>";
+                echo "<td>$result_row[0] </td>";
+                echo "<td>$result_row[1] </td>";
+                echo "<td> $result_row[2] </td>";
+                echo "<td>$result_row[3] </td>";
+                echo "<td>$result_row[4] </td>";
+                echo "</tr>";
+            }
+    
+            echo "</table>";
+        } else {
+            echo "Error: " . $query . "<br>" . mysqli_error($conn);
+        }
+        mysqli_close($conn);
+    ?>
     </section>
     <center>
         <section id="contact-us">
