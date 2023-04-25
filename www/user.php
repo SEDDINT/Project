@@ -1,20 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
- 
-	<!--Script Link  put befor end of </body> -->
-    <link rel="stylesheet" href="../src/style.css">
-    <script src="../src/main.js" defer></script>
-    <title>The GYM</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+	
+	<title>Gym Classes</title>
 </head>
 <body>
-    <a class="nav-link" href="index.html">The gym</a>
+	<h1>Gym Classes</h1>
 
-    <?php
+		<?php
         $host_ip = "127.0.0.1";
         $username = "root"; 
         $password = "salaheddin"; 
@@ -60,9 +54,57 @@
         } else {
             echo "Error: " . $query . "<br>" . mysqli_error($conn);
         }
-        mysqli_close($conn);
     ?>
-    <button class="btn btn-dark">Register</button>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+	<form action="user.php" method="post">
+		<label for="class">Choose a class to register:</label>
+		<select name="class" id="class">
+			<?php
+				// Query the database for available classes to register
+				$sql = "SELECT * FROM classes WHERE number_of_trainees < max_num_of_trainees";
+				$result = mysqli_query($conn, $sql);
+				echo "<option value=''>" . '-- chose a trainer --' . "</option>";
+				// Display available classes in a dropdown list
+				while ($row = mysqli_fetch_assoc($result)) {
+					echo "<option value='" . $row["class_id"] . "'>" . $row["trainer_name"] . "</option>";
+				}
+			?>
+		</select>
+		<button type="submit" >Register</button>
+	</form>
+	<?php
+        
+		// If the user has registered for a class, update the database
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Get the selected class ID from the form data
+            $class_id = $_POST["class"];
+    
+            $host_ip = "127.0.0.1";
+            $username = "root"; 
+            $password = "salaheddin"; 
+            $database = "gym_db";
+    
+            $conn = mysqli_connect($host_ip, $username, $password, $database, "4306");
+    
+            // Check for errors
+            if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+            }
+            try {
+            // Update the counter for the selected class
+            $sql = "UPDATE classes SET number_of_trainees = number_of_trainees + 1 WHERE class_id = " . $class_id;
+            if ($conn->query($sql) === TRUE) {
+                echo "";
+            } else {
+                echo "Error updating class counter: " . $conn->error;
+            }
+            // Close the database connection
+            $conn->close();
+            
+            header("Refresh:0");
+        } catch (Exception $e){
+            echo "";
+        }
+        }
+	?>
 </body>
 </html>
