@@ -4,4 +4,5 @@
     $password = "salaheddin"; //root currently has no password and this is wrong
     $database = "gym_db";
 
+    
 ?>

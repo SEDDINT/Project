@@ -4,7 +4,7 @@
 </head>
 <body>
 	<h2>Login</h2>
-	<form action="../www/index.html" method="post">
+	<form action="../www/user.php" method="post">
 		<label>Username:</label>
 		<input type="text" name="username" required><br><br>
 		<label>Password:</label>
