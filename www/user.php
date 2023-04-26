@@ -2,10 +2,12 @@
 <html>
 <head>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-	
+	<link rel="stylesheet" href="../src/CSS/style.css">
+    <script src="../src/JS/main.js" defer></script>
 	<title>Gym Classes</title>
 </head>
 <body>
+<center>
 	<h1>Gym Classes</h1>
 
 		<?php
@@ -56,7 +58,7 @@
         }
     ?>
 	<form action="user.php" method="post">
-		<label for="class">Choose a class to register:</label>
+        <div class="dropdown">
 		<select name="class" id="class">
 			<?php
 				// Query the database for available classes to register
@@ -69,8 +71,11 @@
 				}
 			?>
 		</select>
-		<button type="submit" >Register</button>
+        </div>
+        <br>
+		<button class="btn btn-dark" type="submit" >Register</button>
 	</form>
+</center>
 	<?php
         
 		// If the user has registered for a class, update the database
@@ -78,12 +83,7 @@
             // Get the selected class ID from the form data
             $class_id = $_POST["class"];
     
-            $host_ip = "127.0.0.1";
-            $username = "root"; 
-            $password = "salaheddin"; 
-            $database = "gym_db";
-    
-            $conn = mysqli_connect($host_ip, $username, $password, $database, "4306");
+            include("../db_login.php");
     
             // Check for errors
             if ($conn->connect_error) {
@@ -93,6 +93,7 @@
             // Update the counter for the selected class
             $sql = "UPDATE classes SET number_of_trainees = number_of_trainees + 1 WHERE class_id = " . $class_id;
             if ($conn->query($sql) === TRUE) {
+                mysqli_query($conn, "INSERT INTO bookings (class_id) VALUES ($class_id)");
                 echo "";
             } else {
                 echo "Error updating class counter: " . $conn->error;

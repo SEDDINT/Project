@@ -8,7 +8,7 @@ section{
 }
 
 .bg-image {
-    background: url('../src/Images/home.jpg') no-repeat center center fixed;
+    background: url('../Images/home.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -36,7 +36,7 @@ section{
     font-size: 50px;
 }
 
-form{
+#contact-us{
     margin: 45vh;
     padding-top: 20vh;
 }
