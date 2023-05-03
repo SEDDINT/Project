@@ -1,7 +1,40 @@
-<?php
-	// Start session
-	session_start();
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+ 
+	<!--Script Link  put befor end of </body> -->
+	<link rel="stylesheet" href="../src/CSS/style.css">
+	<script src="../src/JS/main.js" defer></script>
+</head>
+<body>
+<center>
+        <br>
+		<br>
+		<br>
+	    <h3>Login</h3>
+		<?php if (isset($error_message)): ?>
+			<p><?php echo $error_message; ?></p>
+		<?php endif; ?>
+        <form method="post" action="login.php" style="width: 100vh;">
+            <label>Username:</label><br>
+            <input  class="form-control"  type="text" name="username" placeholder="Enter your Username" required>
+            <br>
+            <label>Password:</label><br>
+            <input class="form-control" type="password" name="password" placeholder="Enter your Password" required >
+            <br>
+            <button type="submit" class="btn btn-dark">Login</button>
+        </form>
+	</center>
+</body>
+</body>
+</html>
+
+
+<?php
 	// Include database connection
 	include("../db_login.php");
 
@@ -24,17 +57,19 @@
 			$user_id = $row["user_id"];
 			$hashed_password = $row["password"];
 
+
+
 			// Check if password is correct
 			if (password_verify($password, $hashed_password)) {
 				
 				// Password is correct, start session and redirect to dashboard
-				$_SESSION["user_id"] = $user_id;
-				header("Location: dashboard.php");
+				header("Location: ../www/user.php");
 				exit();
-
 			} else {
 				// Password is incorrect, show error message
 				$error_message = "Invalid password";
+
+
 
 			}
 
@@ -48,32 +83,3 @@
 	}
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Login</title>
-</head>
-<body>
-
-	<h1>Login</h1>
-
-	<?php if (isset($error_message)): ?>
-		<p><?php echo $error_message; ?></p>
-	<?php endif; ?>
-
-	<form method="post" action="login.php">
-
-		<label for="username">Username:</label>
-		<input type="text" name="username" id="username" required>
-
-		<label for="password">Password:</label>
-		<input type="password" name="password" id="password" required>
-
-		<input type="submit" value="Login">
-
-	</form>
-
-</body>
-</html>

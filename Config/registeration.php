@@ -25,7 +25,6 @@
             <br>
             <button type="submit" class="btn btn-dark">Login</button>
         </form>
-
 	</center>
 	<?php
 		// Check if form is submitted
